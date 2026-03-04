@@ -3,10 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/weather_model.dart';
 import '../widgets/sky_atmosphere.dart';
 
-// ─── Constantes de couleur ────────────────────────────────────────────────────
-// SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux).
-// Les textes doivent donc toujours être BLANCS pour rester lisibles,
-// quel que soit le mode clair/sombre du thème Flutter.
+
 const _white      = Colors.white;
 const _gold       = Color(0xFFD4AF6E);
 const _goldLight  = Color(0xFFF0D080);
@@ -70,10 +67,10 @@ class _DetailScreenState extends State<DetailScreen>
         child: SafeArea(
           child: Column(
             children: [
-              // ── Header fixe ────────────────────────────────────────────────
+
               _FixedHeader(cityName: w.city),
 
-              // ── Contenu scrollable ──────────────────────────────────────────
+
               Expanded(
                 child: FadeTransition(
                   opacity: _fade,
@@ -88,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen>
                           children: [
                             const SizedBox(height: 20),
 
-                            // ── Eyebrow doré ─────────────────────────────────
+
                             Row(children: [
                               Container(width: 22, height: 1, color: _gold_(0.70)),
                               const SizedBox(width: 8),
@@ -104,7 +101,6 @@ class _DetailScreenState extends State<DetailScreen>
                             ]),
                             const SizedBox(height: 14),
 
-                            // ── Nom de la ville ───────────────────────────────
                             Text(
                               w.city,
                               style: TextStyle(
@@ -126,7 +122,6 @@ class _DetailScreenState extends State<DetailScreen>
 
                             const SizedBox(height: 10),
 
-                            // ── Température immense ───────────────────────────
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -154,7 +149,6 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Icône météo + feeling ─────────────────────────
                             Row(
                               children: [
                                 Image.network(
@@ -179,11 +173,9 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Badge heure locale ────────────────────────────
                             const SizedBox(height: 10),
                             _LocalTimeBadge(localHour: w.localHour),
 
-                            // ── Séparateur doré ───────────────────────────────
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
                               child: Row(children: [
@@ -197,7 +189,6 @@ class _DetailScreenState extends State<DetailScreen>
                               ]),
                             ),
 
-                            // ── Grille infos 2×2 ──────────────────────────────
                             Row(
                               children: [
                                 Expanded(
@@ -242,7 +233,6 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Bouton Google Maps ────────────────────────────
                             const SizedBox(height: 24),
                             _MapsButton(onTap: _openMaps),
                             const SizedBox(height: 36),
@@ -269,7 +259,6 @@ class _DetailScreenState extends State<DetailScreen>
   }
 }
 
-// ─── Header fixe ─────────────────────────────────────────────────────────────
 class _FixedHeader extends StatelessWidget {
   final String cityName;
   const _FixedHeader({required this.cityName});
@@ -303,7 +292,6 @@ class _FixedHeader extends StatelessWidget {
   }
 }
 
-// ─── Badge heure locale ───────────────────────────────────────────────────────
 class _LocalTimeBadge extends StatelessWidget {
   final int localHour;
   const _LocalTimeBadge({required this.localHour});
@@ -340,7 +328,6 @@ class _LocalTimeBadge extends StatelessWidget {
   }
 }
 
-// ─── Tuile info ───────────────────────────────────────────────────────────────
 class _InfoTile extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -403,7 +390,6 @@ class _InfoTile extends StatelessWidget {
   }
 }
 
-// ─── Bouton Google Maps ───────────────────────────────────────────────────────
 class _MapsButton extends StatefulWidget {
   final VoidCallback onTap;
   const _MapsButton({required this.onTap});

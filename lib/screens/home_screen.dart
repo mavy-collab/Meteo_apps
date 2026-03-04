@@ -4,13 +4,11 @@ import '../main.dart';
 import 'loading_screen.dart';
 import '../widgets/app_background.dart';
 
-// ─── Or : identique dans les deux thèmes ──────────────────────────────────────
+
 const _gold      = Color(0xFFD4AF6E);
 const _goldLight = Color(0xFFF0D080);
 
-// ─── Palette réactive au thème ────────────────────────────────────────────────
-// Mode sombre : fond quasi-noir, texte ivoire
-// Mode clair  : fond ivoire chaud, texte brun foncé
+
 class _P {
   final bool dark;
   const _P(this.dark);
@@ -35,7 +33,7 @@ class _P {
   Color get haloBot   => const Color(0xFF5C3D8F).withOpacity(dark ? 0.10 : 0.05);
 }
 
-// ─── HomeScreen ───────────────────────────────────────────────────────────────
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -111,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             backgroundColor: Colors.transparent,
             body: Stack(
               children: [
-                // ── Fond radial (halos or + violet) ─────────────────────
+
                 Positioned.fill(
                   child: CustomPaint(
                     painter: _LuxuryBgPainter(
@@ -119,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ),
 
-                // ── Ligne déco verticale gauche ──────────────────────────
+
                 Positioned(
                   left: 28, top: 0, bottom: 0,
                   child: VerticalDivider(width: 1, color: p.lineDecor),
@@ -131,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       opacity: _fadeIn,
                       child: Column(
                         children: [
-                        // ── Top bar ────────────────────────────────────
+
                         Padding(
                           padding: const EdgeInsets.fromLTRB(44, 16, 24, 0),
                           child: Row(
@@ -208,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                         const SizedBox(height: 40),
 
-                        // ── Hero ──────────────────────────────────────
+
                         SlideTransition(
                           position: _heroSlide,
                           child: Padding(
@@ -273,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                         const SizedBox(height: 40),
 
-                        // ── Carte villes ──────────────────────────────
+
                         SlideTransition(
                           position: _cardSlide,
                           child: _LuxuryCitiesCard(
@@ -282,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                         const SizedBox(height: 40),
 
-                        // ── Bouton CTA ────────────────────────────────
+
                         SlideTransition(
                           position: _btnSlide,
                           child: Padding(
@@ -317,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 }
 
-// ─── Fond luxe paramétré ──────────────────────────────────────────────────────
+
 class _LuxuryBgPainter extends CustomPainter {
   final Color haloTop;
   final Color haloBot;
@@ -348,7 +346,7 @@ class _LuxuryBgPainter extends CustomPainter {
       old.haloTop != haloTop || old.haloBot != haloBot;
 }
 
-// ─── Carte villes ─────────────────────────────────────────────────────────────
+
 class _LuxuryCitiesCard extends StatelessWidget {
   final AnimationController shimmerCtrl;
   final _P palette;
@@ -434,7 +432,7 @@ class _LuxuryCitiesCard extends StatelessWidget {
   }
 }
 
-// ─── Shimmer doré tournant sur la bordure ─────────────────────────────────────
+
 class _GoldShimmerBorderPainter extends CustomPainter {
   final double progress;
   const _GoldShimmerBorderPainter({required this.progress});
@@ -484,7 +482,7 @@ class _GoldShimmerBorderPainter extends CustomPainter {
       );
     }
 
-    // Point brillant en tête de l'arc
+
     final hs = (start + arcLen * 0.93) % total;
     final hp = metrics.extractPath(hs, (hs + 2).clamp(0, total));
     final hm = hp.computeMetrics();
@@ -510,7 +508,6 @@ class _GoldShimmerBorderPainter extends CustomPainter {
       old.progress != progress;
 }
 
-// ─── Data & Pill ville ────────────────────────────────────────────────────────
 class _CityData {
   final String flag;
   final String city;
@@ -567,7 +564,7 @@ class _LuxuryCityPill extends StatelessWidget {
   }
 }
 
-// ─── Bouton doré principal ────────────────────────────────────────────────────
+
 class _GoldButton extends StatefulWidget {
   final VoidCallback onTap;
   const _GoldButton({required this.onTap});

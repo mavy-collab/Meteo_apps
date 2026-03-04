@@ -8,12 +8,12 @@ import '../widgets/app_background.dart';
 import '../main.dart';
 import 'detail_screen.dart';
 
-// ─── Palette or ───────────────────────────────────────────────────────────────
+
 const _gold      = Color(0xFFD4AF6E);
 const _goldLight = Color(0xFFF0D080);
 const _goldDark  = Color(0xFFBF953F);
 
-// ─── Palette réactive clair / sombre ─────────────────────────────────────────
+
 class _P {
   final bool dark;
   const _P(this.dark);
@@ -25,7 +25,7 @@ class _P {
   Color get haloBot => const Color(0xFF5C3D8F).withOpacity(dark ? 0.10 : 0.05);
 }
 
-// ─── Couleurs néon par ville ──────────────────────────────────────────────────
+
 Color _cityColor(String city) {
   switch (city) {
     case 'Paris':    return const Color(0xFF00D4FF); // cyan électrique
@@ -36,6 +36,7 @@ Color _cityColor(String city) {
     default:         return _gold;
   }
 }
+
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
