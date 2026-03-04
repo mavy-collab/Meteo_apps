@@ -7,8 +7,6 @@ class WeatherModel {
   final double lat;
   final double lon;
   final String icon;
-  /// Décalage en secondes depuis UTC (fourni par l'API OpenWeather).
-  /// Ex : New York = -18000 (UTC-5), Tokyo = 32400 (UTC+9)
   final int timezoneOffset;
 
   WeatherModel({
@@ -37,13 +35,11 @@ class WeatherModel {
     );
   }
 
-  /// Retourne l'heure locale réelle de la ville (0–23).
   int get localHour {
     final utcNow = DateTime.now().toUtc();
     final cityTime = utcNow.add(Duration(seconds: timezoneOffset));
     return cityTime.hour;
   }
 
-  /// Retourne true si c'est le jour dans la ville (selon l'icône OpenWeather).
   bool get isDaytime => icon.endsWith('d');
 }
