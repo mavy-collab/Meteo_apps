@@ -20,11 +20,8 @@ class AppBackground extends StatelessWidget {
     Color(0xFF0A0E21),
   ];
 
-  List<Color> _getGradientColors(Brightness brightness) {
-    return brightness == Brightness.dark
-        ? _darkGradient
-        : _lightGradient;
-  }
+  List<Color> _getGradientColors(Brightness brightness) =>
+      brightness == Brightness.dark ? _darkGradient : _lightGradient;
 
   @override
   Widget build(BuildContext context) {
