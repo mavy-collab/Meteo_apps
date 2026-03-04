@@ -5,16 +5,11 @@ import '../models/weather_model.dart';
 Color _onBg(BuildContext context, [double opacity = 1]) =>
     Theme.of(context).colorScheme.onBackground.withOpacity(opacity);
 
-
 class WeatherCard extends StatelessWidget {
   final WeatherModel weather;
   final VoidCallback onTap;
 
-  const WeatherCard({
-    super.key,
-    required this.weather,
-    required this.onTap,
-  });
+  const WeatherCard({super.key, required this.weather, required this.onTap});
 
   // Couleur d'accent selon la température (Apple-like)
   Color _accentColor(double t) {
@@ -45,10 +40,7 @@ class WeatherCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: _onBg(context, 0.22),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: _onBg(context, 0.30),
-            width: 1,
-          ),
+          border: Border.all(color: _onBg(context, 0.30), width: 1),
         ),
         child: Row(
           children: [
@@ -58,8 +50,11 @@ class WeatherCard extends StatelessWidget {
               width: 56,
               height: 56,
               errorBuilder: (_, _, _) {
-                return Icon(Icons.wb_cloudy_rounded,
-                    size: 44, color: _onBg(context, 0.7));
+                return Icon(
+                  Icons.wb_cloudy_rounded,
+                  size: 44,
+                  color: _onBg(context, 0.7),
+                );
               },
             ),
 
@@ -81,10 +76,7 @@ class WeatherCard extends StatelessWidget {
                   const SizedBox(height: 3),
                   Text(
                     weather.description,
-                    style: TextStyle(
-                      color: _onBg(context, 0.65),
-                      fontSize: 13,
-                    ),
+                    style: TextStyle(color: _onBg(context, 0.65), fontSize: 13),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -163,10 +155,7 @@ class _MiniStat extends StatelessWidget {
         const SizedBox(width: 3),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 12,
-            color: _onBg(context, 0.55),
-          ),
+          style: TextStyle(fontSize: 12, color: _onBg(context, 0.55)),
         ),
       ],
     );

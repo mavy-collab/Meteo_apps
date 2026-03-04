@@ -7,11 +7,11 @@ import '../widgets/sky_atmosphere.dart';
 // SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux).
 // Les textes doivent donc toujours être BLANCS pour rester lisibles,
 // quel que soit le mode clair/sombre du thème Flutter.
-const _white      = Colors.white;
-const _gold       = Color(0xFFD4AF6E);
-const _goldLight  = Color(0xFFF0D080);
+const _white = Colors.white;
+const _gold = Color(0xFFD4AF6E);
+const _goldLight = Color(0xFFF0D080);
 
-Color _txt([double opacity = 1.0])  => _white.withOpacity(opacity);
+Color _txt([double opacity = 1.0]) => _white.withOpacity(opacity);
 Color _gold_([double opacity = 1.0]) => _gold.withOpacity(opacity);
 
 class DetailScreen extends StatefulWidget {
@@ -64,8 +64,8 @@ class _DetailScreenState extends State<DetailScreen>
 
     return Scaffold(
       body: SkyAtmosphere(
-        cityLocalHour:   w.localHour,
-        cityIsDaytime:   w.isDaytime,
+        cityLocalHour: w.localHour,
+        cityIsDaytime: w.isDaytime,
         weatherIconCode: iconCode,
         child: SafeArea(
           child: Column(
@@ -89,19 +89,25 @@ class _DetailScreenState extends State<DetailScreen>
                             const SizedBox(height: 20),
 
                             // ── Eyebrow doré ─────────────────────────────────
-                            Row(children: [
-                              Container(width: 22, height: 1, color: _gold_(0.70)),
-                              const SizedBox(width: 8),
-                              Text(
-                                'MÉTÉO LOCALE',
-                                style: TextStyle(
-                                  fontSize: 9,
-                                  color: _gold_(0.85),
-                                  letterSpacing: 3.5,
-                                  fontWeight: FontWeight.w600,
+                            Row(
+                              children: [
+                                Container(
+                                  width: 22,
+                                  height: 1,
+                                  color: _gold_(0.70),
                                 ),
-                              ),
-                            ]),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'MÉTÉO LOCALE',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: _gold_(0.85),
+                                    letterSpacing: 3.5,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(height: 14),
 
                             // ── Nom de la ville ───────────────────────────────
@@ -186,15 +192,34 @@ class _DetailScreenState extends State<DetailScreen>
                             // ── Séparateur doré ───────────────────────────────
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
-                              child: Row(children: [
-                                Expanded(child: Divider(color: _gold_(0.25), thickness: 0.5)),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                                  child: Text('✦',
-                                      style: TextStyle(color: _gold_(0.40), fontSize: 9)),
-                                ),
-                                Expanded(child: Divider(color: _gold_(0.25), thickness: 0.5)),
-                              ]),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Divider(
+                                      color: _gold_(0.25),
+                                      thickness: 0.5,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: Text(
+                                      '✦',
+                                      style: TextStyle(
+                                        color: _gold_(0.40),
+                                        fontSize: 9,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Divider(
+                                      color: _gold_(0.25),
+                                      thickness: 0.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
 
                             // ── Grille infos 2×2 ──────────────────────────────
@@ -261,7 +286,7 @@ class _DetailScreenState extends State<DetailScreen>
   }
 
   String _tempFeeling(double t) {
-    if (t < 0)  return 'Conditions glaciales';
+    if (t < 0) return 'Conditions glaciales';
     if (t < 12) return 'Temps froid';
     if (t < 22) return 'Temps agréable';
     if (t < 30) return 'Temps chaud';
@@ -314,10 +339,10 @@ class _LocalTimeBadge extends StatelessWidget {
     final period = h >= 5 && h < 12
         ? 'Matin'
         : h < 18
-            ? 'Après-midi'
-            : h < 22
-                ? 'Soir'
-                : 'Nuit';
+        ? 'Après-midi'
+        : h < 22
+        ? 'Soir'
+        : 'Nuit';
     final display = '${h.toString().padLeft(2, '0')}h locales · $period';
 
     return Container(
@@ -362,10 +387,7 @@ class _InfoTile extends StatelessWidget {
         // Fond toujours sombre semi-transparent → lisible sur le ciel
         color: Colors.black.withOpacity(0.28),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: Colors.white.withOpacity(0.14),
-          width: 0.8,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.14), width: 0.8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,7 +478,11 @@ class _MapsButtonState extends State<_MapsButton> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.map_rounded, color: _gold.withOpacity(0.85), size: 18),
+                Icon(
+                  Icons.map_rounded,
+                  color: _gold.withOpacity(0.85),
+                  size: 18,
+                ),
                 const SizedBox(width: 10),
                 Text(
                   'Voir sur Google Maps',
