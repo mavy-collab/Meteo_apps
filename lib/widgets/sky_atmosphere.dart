@@ -7,8 +7,8 @@ enum DayPeriod { dawn, morning, midday, afternoon, sunset, dusk, night }
 
 // ─── Widget principal ─────────────────────────────────────────────────────────
 
-/// Fond atmosphérique animé : gradient + soleil/lune + nuages + étoiles.
-/// Tout est dessiné via UN SEUL CustomPainter + UN SEUL AnimationController.
+/// Fond animé avec ciel, soleil, lune, nuages et étoiles.
+/// Tout est dessiné dans un seul CustomPainter pour éviter trop de widgets.
 class SkyAtmosphere extends StatefulWidget {
   final Widget child;
   final int? cityLocalHour;
