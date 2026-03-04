@@ -134,7 +134,7 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
             body: Stack(
               children: [
                 Positioned.fill(child: CustomPaint(painter: _LuxBgPainter(haloTop: p.haloTop, haloBot: p.haloBot))),
-                Positioned(left: 28, top: 0, bottom: 0, child: VerticalDivider(width: 1, color: _gold.withOpacity(isDark ? 0.07 : 0.14))),
+
                 SafeArea(
                   child: Column(
                     children: [
@@ -444,23 +444,7 @@ class _ColoredCardWrapper extends StatelessWidget {
         child: Stack(
           children: [
             child,
-            // Bandeau coloré gauche — adouci en mode clair
-            Positioned(
-              left: 0, top: 0, bottom: 0,
-              child: Container(
-                width: 3.5,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      cc.withOpacity(bandeauOpacity),
-                      cc.withOpacity(bandeauOpacity * 0.25),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+
             // Badge ville — adouci en mode clair
             Positioned(
               top: 10, right: 12,
