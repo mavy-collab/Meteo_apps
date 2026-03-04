@@ -151,7 +151,7 @@ class WeatherCard extends StatelessWidget {
     );
   }
 }
-
+// Petit widget pour afficher une petite info (humidité, vent, etc.)
 class _MiniStat extends StatelessWidget {
   final IconData icon;
   final String label;
