@@ -40,7 +40,7 @@ class _SkyAtmosphereState extends State<SkyAtmosphere>
   void initState() {
     super.initState();
     _hour = widget.cityLocalHour ?? DateTime.now().hour;
-    _period = _buildPeriod();
+    _period = _buildPeriod(); // détermine la période selon l'heure
 
     // Positions fixes des étoiles (graine 42 = reproductible)
     final rng = math.Random(42);
