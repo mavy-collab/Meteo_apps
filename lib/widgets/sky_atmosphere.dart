@@ -108,11 +108,17 @@ class _SkyAtmosphereState extends State<SkyAtmosphere>
 
   int get _cloudCount {
     final code = widget.weatherIconCode ?? '';
-    if (code == '01') return 0;
-    if (code == '02') return 1;
-    if (code == '03') return 2;
-    if (code.isEmpty) return 2;
-    return 3;
+
+    switch (code) {
+      case '01':
+        return 0;
+      case '02':
+        return 1;
+      case '03':
+        return 2;
+      default:
+        return code.isEmpty ? 2 : 3;
+    }
   }
 
   Color get _cloudColor {
