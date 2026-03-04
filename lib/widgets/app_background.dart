@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Widget qui met un fond en dégradé.
+/// Il change automatiquement selon le mode clair ou sombre.
 class AppBackground extends StatelessWidget {
   final Widget child;
 
