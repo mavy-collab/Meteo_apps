@@ -18,10 +18,18 @@ class WeatherCard extends StatelessWidget {
 
   // Couleur d'accent selon la température (Apple-like)
   Color _accentColor(double t) {
-    if (t < 0) return const Color(0xFF90CAF9);
-    if (t < 12) return const Color(0xFF64B5F6);
-    if (t < 22) return const Color(0xFF4FC3F7);
-    if (t < 30) return const Color(0xFFFFB74D);
+    if (t < 0) {
+      return const Color(0xFF90CAF9);
+    }
+    if (t < 12) {
+      return const Color(0xFF64B5F6);
+    }
+    if (t < 22) {
+      return const Color(0xFF4FC3F7);
+    }
+    if (t < 30) {
+      return const Color(0xFFFFB74D);
+    }
     return const Color(0xFFEF9A9A);
   }
 
