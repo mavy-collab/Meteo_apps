@@ -16,6 +16,7 @@ const Color _goldLight = Color(0xFFF0D080);
 /// Palette réactive au thème
 /// Mode sombre : fond quasi-noir, texte ivoire
 /// Mode clair  : fond ivoire chaud, texte brun foncé
+/// SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux). Ces couleurs sont utilisées pour les éléments de premier plan (texte, icônes, cartes) afin d'assurer un bon contraste et une harmonie visuelle. Les textes doivent donc rester BLANCS pour être lisibles.
 /// ─────────────────────────────────────────────────────────────────────────────
 class _P {
   final bool dark;
@@ -35,6 +36,7 @@ class _P {
 
 /// ─────────────────────────────────────────────────────────────────────────────
 /// HomeScreen
+/// Page d'accueil avec présentation de l'app, sélection de thème, et bouton pour accéder à la météo détaillée.
 /// ─────────────────────────────────────────────────────────────────────────────
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

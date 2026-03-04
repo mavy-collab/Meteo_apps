@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 enum DayPeriod { dawn, morning, midday, afternoon, sunset, dusk, night }
 
 // ─── Widget principal ─────────────────────────────────────────────────────────
-
+// SkyAtmosphere enveloppe tout le contenu de l'app et dessine le ciel animé en fond.
 /// Fond atmosphérique animé : gradient + soleil/lune + nuages + étoiles.
 /// Tout est dessiné via UN SEUL CustomPainter + UN SEUL AnimationController.
 class SkyAtmosphere extends StatefulWidget {
