@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../models/weather_model.dart';
 import '../widgets/sky_atmosphere.dart';
 
-// ─── Constantes de couleur ────────────────────────────────────────────────────
-// SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux).
-// Les textes doivent donc toujours être BLANCS pour rester lisibles,
-// quel que soit le mode clair/sombre du thème Flutter.
-const _white = Colors.white;
-const _gold = Color(0xFFD4AF6E);
-const _goldLight = Color(0xFFF0D080);
+/// ─────────────────────────────────────────────────────────────────────────────
+/// Constantes de couleur
+/// SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux).
+/// Les textes doivent donc rester BLANCS pour être lisibles.
+/// ─────────────────────────────────────────────────────────────────────────────
+const Color _white = Colors.white;
+const Color _gold = Color(0xFFD4AF6E);
+const Color _goldLight = Color(0xFFF0D080);
 
 Color _txt([double opacity = 1.0]) => _white.withOpacity(opacity);
-Color _gold_([double opacity = 1.0]) => _gold.withOpacity(opacity);
+Color _goldOpacity([double opacity = 1.0]) => _gold.withOpacity(opacity);
 
 class DetailScreen extends StatefulWidget {
   final WeatherModel weather;
+
   const DetailScreen({super.key, required this.weather});
 
   @override
@@ -24,18 +27,21 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _fade;
-  late Animation<Offset> _slide;
+  late final AnimationController _ctrl;
+  late final Animation<double> _fade;
+  late final Animation<Offset> _slide;
 
   @override
   void initState() {
     super.initState();
+
     _ctrl = AnimationController(
       duration: const Duration(milliseconds: 750),
       vsync: this,
     )..forward();
+
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
+
     _slide = Tween<Offset>(
       begin: const Offset(0, 0.08),
       end: Offset.zero,
@@ -49,17 +55,35 @@ class _DetailScreenState extends State<DetailScreen>
   }
 
   Future<void> _openMaps() async {
+    final w = widget.weather;
     final url =
-        'https://www.google.com/maps/search/?api=1&query=${widget.weather.lat},${widget.weather.lon}';
+        'https://www.google.com/maps/search/?api=1&query=${w.lat},${w.lon}';
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+    final canOpen = await canLaunchUrl(uri);
+    if (!canOpen) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Impossible d’ouvrir Google Maps sur cet appareil.',
+            style: TextStyle(color: _txt(0.95)),
+          ),
+          backgroundColor: Colors.black.withOpacity(0.65),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
     }
+
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   @override
   Widget build(BuildContext context) {
     final w = widget.weather;
+
+    // openweather icon: ex "10d" / "10n" -> "10"
     final iconCode = w.icon.replaceAll(RegExp(r'[dn]'), '');
 
     return Scaffold(
@@ -73,7 +97,7 @@ class _DetailScreenState extends State<DetailScreen>
               // ── Header fixe ────────────────────────────────────────────────
               _FixedHeader(cityName: w.city),
 
-              // ── Contenu scrollable ──────────────────────────────────────────
+              // ── Contenu scrollable ─────────────────────────────────────────
               Expanded(
                 child: FadeTransition(
                   opacity: _fade,
@@ -88,20 +112,20 @@ class _DetailScreenState extends State<DetailScreen>
                           children: [
                             const SizedBox(height: 20),
 
-                            // ── Eyebrow doré ─────────────────────────────────
+                            // ── Eyebrow doré ────────────────────────────────
                             Row(
                               children: [
                                 Container(
                                   width: 22,
                                   height: 1,
-                                  color: _gold_(0.70),
+                                  color: _goldOpacity(0.70),
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   'MÉTÉO LOCALE',
                                   style: TextStyle(
                                     fontSize: 9,
-                                    color: _gold_(0.85),
+                                    color: _goldOpacity(0.85),
                                     letterSpacing: 3.5,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -110,7 +134,7 @@ class _DetailScreenState extends State<DetailScreen>
                             ),
                             const SizedBox(height: 14),
 
-                            // ── Nom de la ville ───────────────────────────────
+                            // ── Nom de la ville ─────────────────────────────
                             Text(
                               w.city,
                               style: TextStyle(
@@ -132,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen>
 
                             const SizedBox(height: 10),
 
-                            // ── Température immense ───────────────────────────
+                            // ── Température immense ─────────────────────────
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -160,7 +184,7 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Icône météo + feeling ─────────────────────────
+                            // ── Icône météo + feeling ───────────────────────
                             Row(
                               children: [
                                 Image.network(
@@ -185,18 +209,18 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Badge heure locale ────────────────────────────
+                            // ── Badge heure locale ─────────────────────────
                             const SizedBox(height: 10),
                             _LocalTimeBadge(localHour: w.localHour),
 
-                            // ── Séparateur doré ───────────────────────────────
+                            // ── Séparateur doré ────────────────────────────
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 24),
                               child: Row(
                                 children: [
                                   Expanded(
                                     child: Divider(
-                                      color: _gold_(0.25),
+                                      color: _goldOpacity(0.25),
                                       thickness: 0.5,
                                     ),
                                   ),
@@ -207,14 +231,14 @@ class _DetailScreenState extends State<DetailScreen>
                                     child: Text(
                                       '✦',
                                       style: TextStyle(
-                                        color: _gold_(0.40),
+                                        color: _goldOpacity(0.40),
                                         fontSize: 9,
                                       ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Divider(
-                                      color: _gold_(0.25),
+                                      color: _goldOpacity(0.25),
                                       thickness: 0.5,
                                     ),
                                   ),
@@ -222,7 +246,7 @@ class _DetailScreenState extends State<DetailScreen>
                               ),
                             ),
 
-                            // ── Grille infos 2×2 ──────────────────────────────
+                            // ── Grille infos 2×2 ────────────────────────────
                             Row(
                               children: [
                                 Expanded(
@@ -267,7 +291,7 @@ class _DetailScreenState extends State<DetailScreen>
                               ],
                             ),
 
-                            // ── Bouton Google Maps ────────────────────────────
+                            // ── Bouton Google Maps ──────────────────────────
                             const SizedBox(height: 24),
                             _MapsButton(onTap: _openMaps),
                             const SizedBox(height: 36),
@@ -294,9 +318,12 @@ class _DetailScreenState extends State<DetailScreen>
   }
 }
 
-// ─── Header fixe ─────────────────────────────────────────────────────────────
+/// ─────────────────────────────────────────────────────────────────────────────
+/// Header fixe
+/// ─────────────────────────────────────────────────────────────────────────────
 class _FixedHeader extends StatelessWidget {
   final String cityName;
+
   const _FixedHeader({required this.cityName});
 
   @override
@@ -310,7 +337,6 @@ class _FixedHeader extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                // Toujours semi-transparent blanc : lisible sur n'importe quel ciel
                 color: Colors.white.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.white.withOpacity(0.30)),
@@ -328,21 +354,26 @@ class _FixedHeader extends StatelessWidget {
   }
 }
 
-// ─── Badge heure locale ───────────────────────────────────────────────────────
+/// ─────────────────────────────────────────────────────────────────────────────
+/// Badge heure locale
+/// ─────────────────────────────────────────────────────────────────────────────
 class _LocalTimeBadge extends StatelessWidget {
   final int localHour;
+
   const _LocalTimeBadge({required this.localHour});
 
   @override
   Widget build(BuildContext context) {
     final h = localHour;
-    final period = h >= 5 && h < 12
+
+    final period = (h >= 5 && h < 12)
         ? 'Matin'
-        : h < 18
+        : (h < 18)
         ? 'Après-midi'
-        : h < 22
+        : (h < 22)
         ? 'Soir'
         : 'Nuit';
+
     final display = '${h.toString().padLeft(2, '0')}h locales · $period';
 
     return Container(
@@ -365,7 +396,9 @@ class _LocalTimeBadge extends StatelessWidget {
   }
 }
 
-// ─── Tuile info ───────────────────────────────────────────────────────────────
+/// ─────────────────────────────────────────────────────────────────────────────
+/// Tuile info
+/// ─────────────────────────────────────────────────────────────────────────────
 class _InfoTile extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -384,7 +417,6 @@ class _InfoTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
       decoration: BoxDecoration(
-        // Fond toujours sombre semi-transparent → lisible sur le ciel
         color: Colors.black.withOpacity(0.28),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: Colors.white.withOpacity(0.14), width: 0.8),
@@ -400,7 +432,6 @@ class _InfoTile extends StatelessWidget {
                 label.toUpperCase(),
                 style: TextStyle(
                   fontSize: 11,
-                  // Label en or pour cohérence luxe
                   color: _gold.withOpacity(0.65),
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.8,
@@ -414,7 +445,6 @@ class _InfoTile extends StatelessWidget {
             style: const TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.w200,
-              // Valeur toujours blanche : contraste maximal sur fond sombre
               color: Colors.white,
               letterSpacing: -0.5,
             ),
@@ -425,9 +455,12 @@ class _InfoTile extends StatelessWidget {
   }
 }
 
-// ─── Bouton Google Maps ───────────────────────────────────────────────────────
+/// ─────────────────────────────────────────────────────────────────────────────
+/// Bouton Google Maps
+/// ─────────────────────────────────────────────────────────────────────────────
 class _MapsButton extends StatefulWidget {
   final VoidCallback onTap;
+
   const _MapsButton({required this.onTap});
 
   @override
@@ -437,15 +470,23 @@ class _MapsButton extends StatefulWidget {
 class _MapsButtonState extends State<_MapsButton> {
   bool _pressed = false;
 
+  void _setPressed(bool v) {
+    if (_pressed == v) return;
+    setState(() => _pressed = v);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final opacity1 = _pressed ? 0.14 : 0.18;
+    final opacity2 = _pressed ? 0.08 : 0.10;
+
     return GestureDetector(
-      onTapDown: (_) => setState(() => _pressed = true),
+      onTapDown: (_) => _setPressed(true),
+      onTapCancel: () => _setPressed(false),
       onTapUp: (_) {
-        setState(() => _pressed = false);
+        _setPressed(false);
         widget.onTap();
       },
-      onTapCancel: () => setState(() => _pressed = false),
       child: AnimatedScale(
         scale: _pressed ? 0.97 : 1.0,
         duration: const Duration(milliseconds: 100),
@@ -456,17 +497,16 @@ class _MapsButtonState extends State<_MapsButton> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 18),
             decoration: BoxDecoration(
-              // Dégradé or luxe — cohérent avec HomeScreen
               gradient: LinearGradient(
                 colors: [
-                  _gold.withOpacity(_pressed ? 0.14 : 0.18),
-                  _gold.withOpacity(_pressed ? 0.08 : 0.10),
+                  _gold.withOpacity(opacity1),
+                  _gold.withOpacity(opacity2),
                 ],
               ),
               borderRadius: BorderRadius.circular(18),
               border: Border.all(color: _gold.withOpacity(0.50), width: 1),
               boxShadow: _pressed
-                  ? []
+                  ? const []
                   : [
                       BoxShadow(
                         color: _gold.withOpacity(0.18),
@@ -487,7 +527,6 @@ class _MapsButtonState extends State<_MapsButton> {
                 Text(
                   'Voir sur Google Maps',
                   style: TextStyle(
-                    // Texte blanc sur fond semi-transparent : toujours lisible
                     color: Colors.white.withOpacity(0.90),
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
