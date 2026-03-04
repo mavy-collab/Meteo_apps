@@ -32,7 +32,8 @@ class WeatherCard extends StatelessWidget {
     }
     return const Color(0xFFEF9A9A);
   }
-
+// Retourne un texte décrivant la sensation de température
+// selon la valeur en degrés Celsius
   String _tempFeeling(double t) {
     if (t < 0) return 'Glacial';
     if (t < 12) return 'Froid';
