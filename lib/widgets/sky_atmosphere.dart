@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // ─── Période de la journée ────────────────────────────────────────────────────
-
+// Permet de faire varier le gradient + les éléments décoratifs (soleil/lune/nuages/étoiles)
 enum DayPeriod { dawn, morning, midday, afternoon, sunset, dusk, night }
 
 // ─── Widget principal ─────────────────────────────────────────────────────────

@@ -7,7 +7,7 @@ import '../widgets/sky_atmosphere.dart';
 /// ─────────────────────────────────────────────────────────────────────────────
 /// Constantes de couleur
 /// SkyAtmosphere impose toujours un fond visuel (ciel de jour/nuit/nuageux).
-/// Les textes doivent donc rester BLANCS pour être lisibles.
+///Ces couleurs sont utilisées pour les éléments de premier plan (texte, icônes, cartes) afin d'assurer un bon contraste et une harmonie visuelle.
 /// ─────────────────────────────────────────────────────────────────────────────
 const Color _white = Colors.white;
 const Color _gold = Color(0xFFD4AF6E);

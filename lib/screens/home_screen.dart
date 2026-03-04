@@ -7,6 +7,7 @@ import 'loading_screen.dart';
 
 /// ─────────────────────────────────────────────────────────────────────────────
 /// Or : identique dans les deux thèmes
+/// L'or est la couleur d'accent principale, utilisée pour les éléments décoratifs, les titres et les accents lumineux. Elle reste constante entre les thèmes pour renforcer l'identité visuelle de l'application et apporter une touche de luxe et de chaleur, que ce soit sur un fond sombre ou clair.
 /// ─────────────────────────────────────────────────────────────────────────────
 const Color _gold = Color(0xFFD4AF6E);
 const Color _goldLight = Color(0xFFF0D080);

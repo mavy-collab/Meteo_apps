@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Simple gradient background that responds to light/dark mode.
-///
+/// Light mode uses  a soft blue/white gradient, dark mode a deep blue/indigo.
 /// Light mode uses  a soft blue/white gradient, dark mode a deep blue/indigo.
 class AppBackground extends StatelessWidget {
   final Widget child;

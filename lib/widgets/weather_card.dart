@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/weather_model.dart';
 
 // helper to pick contrasting foreground color depending on theme
+// (with optional opacity)
 Color _onBg(BuildContext context, [double opacity = 1]) =>
     Theme.of(context).colorScheme.onBackground.withOpacity(opacity);
 
