@@ -4,3 +4,4 @@
 
 - Anthony Baron Mban
 - Mavy Good Boukambou
+- Dieuvit D'espoir Ekonga
