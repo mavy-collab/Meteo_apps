@@ -61,8 +61,10 @@ class _SkyAtmosphereState extends State<SkyAtmosphere>
 
   DayPeriod _buildPeriod() {
     final p = _periodFromHour(_hour);
-    if (widget.cityIsDaytime == true && _isNight(p)) return DayPeriod.midday;
-    if (widget.cityIsDaytime == false && !_isNight(p)) return DayPeriod.night;
+    if (widget.cityIsDaytime != null) {
+      if (widget.cityIsDaytime! && _isNight(p)) return DayPeriod.midday;
+      if (!widget.cityIsDaytime! && !_isNight(p)) return DayPeriod.night;
+    }
     return p;
   }
 
