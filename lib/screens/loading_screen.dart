@@ -134,7 +134,7 @@ class _LoadingScreenState extends State<LoadingScreen> with TickerProviderStateM
             body: Stack(
               children: [
                 Positioned.fill(child: CustomPaint(painter: _LuxBgPainter(haloTop: p.haloTop, haloBot: p.haloBot))),
-                Positioned(left: 28, top: 0, bottom: 0, child: VerticalDivider(width: 1, color: _gold.withOpacity(isDark ? 0.07 : 0.14))),
+
                 SafeArea(
                   child: Column(
                     children: [
@@ -420,11 +420,23 @@ class _ColoredCardWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cc = _cityColor(city);
+    // En mode clair les néons sont trop intenses — on les adoucit fortement
+    final shadowOpacity  = isDark ? 0.20 : 0.08;
+    final bandeauOpacity = isDark ? 1.00 : 0.45;
+    final badgeBgOpacity = isDark ? 0.18 : 0.08;
+    final badgeBdOpacity = isDark ? 0.40 : 0.20;
+    final dotOpacity     = isDark ? 1.00 : 0.55;
+    final textOpacity    = isDark ? 1.00 : 0.60;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: cc.withOpacity(isDark ? 0.20 : 0.14), blurRadius: 18, offset: const Offset(0, 5)),
+          BoxShadow(
+            color: cc.withOpacity(shadowOpacity),
+            blurRadius: isDark ? 18 : 10,
+            offset: const Offset(0, 3),
+          ),
         ],
       ),
       child: ClipRRect(
@@ -432,37 +444,35 @@ class _ColoredCardWrapper extends StatelessWidget {
         child: Stack(
           children: [
             child,
-            // Bandeau coloré gauche
-            Positioned(
-              left: 0, top: 0, bottom: 0,
-              child: Container(
-                width: 3.5,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [cc, cc.withOpacity(0.25)],
-                  ),
-                ),
-              ),
-            ),
-            // Badge ville coloré haut droite
+
+            // Badge ville — adouci en mode clair
             Positioned(
               top: 10, right: 12,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: cc.withOpacity(isDark ? 0.18 : 0.12),
+                  color: cc.withOpacity(badgeBgOpacity),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: cc.withOpacity(0.40), width: 0.8),
+                  border: Border.all(color: cc.withOpacity(badgeBdOpacity), width: 0.8),
                 ),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Container(width: 4, height: 4,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: cc)),
+                  Container(
+                    width: 4, height: 4,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: cc.withOpacity(dotOpacity),
+                    ),
+                  ),
                   const SizedBox(width: 5),
-                  Text(city.toUpperCase(),
-                      style: TextStyle(fontSize: 7, fontWeight: FontWeight.w800,
-                          color: cc, letterSpacing: 1.2)),
+                  Text(
+                    city.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 7,
+                      fontWeight: FontWeight.w800,
+                      color: cc.withOpacity(textOpacity),
+                      letterSpacing: 1.2,
+                    ),
+                  ),
                 ]),
               ),
             ),

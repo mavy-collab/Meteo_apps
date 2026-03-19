@@ -16,7 +16,6 @@ class WeatherCard extends StatelessWidget {
     required this.onTap,
   });
 
-  // Couleur d'accent selon la température (Apple-like)
   Color _accentColor(double t) {
     if (t < 0) return const Color(0xFF90CAF9);
     if (t < 12) return const Color(0xFF64B5F6);
@@ -45,10 +44,7 @@ class WeatherCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: _onBg(context, 0.22),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: _onBg(context, 0.30),
-            width: 1,
-          ),
+          // Bordure supprimée — causait la ligne fine visible en mode clair
         ),
         child: Row(
           children: [
@@ -57,7 +53,7 @@ class WeatherCard extends StatelessWidget {
               'https://openweathermap.org/img/wn/${weather.icon}@2x.png',
               width: 56,
               height: 56,
-              errorBuilder: (_, _, _) {
+              errorBuilder: (_, __, ___) {
                 return Icon(Icons.wb_cloudy_rounded,
                     size: 44, color: _onBg(context, 0.7));
               },
@@ -106,7 +102,7 @@ class WeatherCard extends StatelessWidget {
               ),
             ),
 
-            // Température (grand, à droite — style Apple)
+            // Température
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
